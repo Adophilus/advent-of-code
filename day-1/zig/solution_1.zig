@@ -7,7 +7,7 @@ pub fn main() !void {
 
     defer {
         const leaks_occurred = gpa.deinit();
-        if (leaks_occurred) @panic("Memory leak detected!");
+        std.debug.print("Any memory leaks? {}\n", .{leaks_occurred});
     }
 
     const file = try std.fs.cwd().openFile("input.txt", .{ .mode = .read_only });
@@ -20,8 +20,9 @@ pub fn main() !void {
     if (builtin.os.tag == .windows)
         delim = '\r';
 
-    while (try reader.readUntilDelimiterOrEof(&buffer, '\r')) |line| {
-        std.debug.print("line: {s}\n", .{line});
+    while (try reader.readUntilDelimiterOrEof(&buffer, delim)) |line| {
+        if (builtin.os.tag == .windows)
+            _ = try reader.readByte();
         if (std.mem.eql(u8, line, "")) {
             var sum: u32 = 0;
             for (caloriesList.items) |calories| {
@@ -30,6 +31,7 @@ pub fn main() !void {
             if (sum > max) {
                 max = sum;
             }
+            caloriesList.clearAndFree();
         } else {
             const number = try std.fmt.parseInt(u32, line, 10);
             try caloriesList.append(number);
