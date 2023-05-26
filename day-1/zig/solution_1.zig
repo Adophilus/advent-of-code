@@ -37,4 +37,6 @@ pub fn main() !void {
             try caloriesList.append(number);
         }
     }
+
+    std.debug.print("The elf with the most calories has {d} calories\n", .{max});
 }
