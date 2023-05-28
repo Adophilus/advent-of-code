@@ -14,7 +14,7 @@ pub fn main() !void {
     defer file.close();
     const reader = file.reader();
     var buffer: [100]u8 = undefined;
-    var max: u32 = 0;
+    var maxCalories = [_]u32{ 0, 0, 0 };
     var caloriesList = std.ArrayList(u32).init(allocator);
     var delim: u8 = '\n';
     if (builtin.os.tag == .windows)
@@ -28,9 +28,13 @@ pub fn main() !void {
             for (caloriesList.items) |calories| {
                 sum += calories;
             }
-            if (sum > max) {
-                max = sum;
+            var minCalorieIndex: usize = 0;
+            for (maxCalories) |maxCalorie, i| {
+                if (maxCalorie < maxCalories[minCalorieIndex])
+                    minCalorieIndex = i;
             }
+            if (sum > maxCalories[minCalorieIndex])
+                maxCalories[minCalorieIndex] = sum;
             caloriesList.clearAndFree();
         } else {
             const number = try std.fmt.parseInt(u32, line, 10);
@@ -38,5 +42,5 @@ pub fn main() !void {
         }
     }
 
-    std.debug.print("The elf with the most calories has {d} calories\n", .{max});
+    std.debug.print("The elves with the most calories have {d}, {d}, and {d} calories\n", .{ maxCalories[0], maxCalories[1], maxCalories[2] });
 }
