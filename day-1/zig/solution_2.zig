@@ -43,4 +43,5 @@ pub fn main() !void {
     }
 
     std.debug.print("The elves with the most calories have {d}, {d}, and {d} calories\n", .{ maxCalories[0], maxCalories[1], maxCalories[2] });
+    std.debug.print("the sum of their collective calories is {d}\n", .{maxCalories[0] + maxCalories[1] + maxCalories[2]});
 }
