@@ -1,9 +1,8 @@
 use std::fs;
 
 fn main() {
-    println!("Beginning of solution 1");
     let file_content = fs::read_to_string("input.txt").unwrap();
-    let lines = file_content.lines("\n");
+    let lines = file_content.lines();
     let mut max = 0;
     let mut sum = 0;
     for line in lines {
