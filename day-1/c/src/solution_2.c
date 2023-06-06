@@ -104,8 +104,12 @@ int main() {
     max += max_calories[i];
   }
   char msg[100];
+  sprintf(msg, "The elves with the most calories carry %d, %d, and %d calories", max_calories[0], max_calories[1], max_calories[2]);
+  print_info(msg);
+  msg[0] = '\0';
+
   sprintf(msg,
-          "The elves with the most calories carry %d calories altogether",
+          "Altogether they carry %d calories",
           max);
   print_info(msg);
 
