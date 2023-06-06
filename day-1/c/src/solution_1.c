@@ -53,24 +53,6 @@ Result string_to_int(char *str) {
   return result;
 }
 
-void print_special_characters_of_string(char *str) {
-  char *output = malloc(sizeof(char) * strlen(str));
-  for (int i = 0; i < strlen(str); i++) {
-    switch (str[i]) {
-    case '\r':
-      output[i] = 'r';
-      break;
-    case '\n':
-      output[i] = 'n';
-      break;
-    default:
-      output[i] = str[i];
-    }
-  }
-  printf("%s\n", output);
-  free(output);
-}
-
 int main() {
   char *input_file_path = "input.txt";
   FILE *fptr = fopen(input_file_path, "r");
@@ -82,15 +64,8 @@ int main() {
     int line_length = strcspn(buffer, LINE_ENDING);
     char line[100];
 
-    printf("LINE_ENDING: '%s', %d\n", LINE_ENDING, strlen(LINE_ENDING));
-    printf("strlen(buffer): %d\n", strlen(buffer));
-    printf("line_length: %d\n", line_length);
-
     strncpy(line, buffer, line_length);
     line[line_length - 1] = '\0';
-
-    printf("line[4] = %c\n", line[4]);
-    printf("strlen(line): %d\n", strlen(line));
 
     if (line_length == 0) {
       if (sum > max)
@@ -103,7 +78,6 @@ int main() {
     if (result.err != NULL) {
       char error_message[100];
       sprintf(error_message, "Failed to convert number %s", line);
-      print_special_characters_of_string(line);
       print_error(result.err);
       print_error(error_message);
 
