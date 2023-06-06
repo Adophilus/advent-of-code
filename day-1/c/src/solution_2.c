@@ -67,13 +67,13 @@ int main() {
 
     if (line_length == 0) {
       int least_calorie_index = 0;
-      for (int 1 = 0; i < sizeof(max_calories); i++) {
+      for (int i = 0; i < sizeof(max_calories); i++) {
         if (max_calories[i] < max_calories[least_calorie_index])
           least_calorie_index = i;
       }
 
       if (sum > max_calories[least_calorie_index])
-        max[least_calorie_index] = sum;
+        max_calories[least_calorie_index] = sum;
       sum = 0;
       continue;
     }
