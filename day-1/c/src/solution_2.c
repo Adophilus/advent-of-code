@@ -100,7 +100,7 @@ int main() {
   }
 
   int max = 0;
-  for (int i = 0; i < sizeof(max_calories); i++) {
+  for (int i = 0; i < sizeof(max_calories) / sizeof(max_calories[0]); i++) {
     max += max_calories[i];
   }
   char msg[100];
