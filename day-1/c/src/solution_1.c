@@ -87,6 +87,7 @@ int main() {
     printf("line_length: %d\n", line_length);
 
     strncpy(line, buffer, line_length);
+    line[line_length - 1] = '\0';
 
     printf("line[4] = %c\n", line[4]);
     printf("strlen(line): %d\n", strlen(line));
