@@ -1,3 +1,9 @@
+#ifdef _WIN32
+#define LINE_ENDING "\r\n"
+#else
+#define LINE_ENDING "\n"
+#endif
+
 #define ANSI_COLOR_RED "\x1b[31m"
 #define ANSI_COLOR_GREEN "\x1b[32m"
 #define ANSI_COLOR_YELLOW "\x1b[33m"
@@ -40,11 +46,29 @@ Result string_to_int(char *str) {
 
   value = strtol(str, &endptr, 10);
   if (str == endptr || *endptr != '\0') {
-    Result result = {NULL, "Failed to parse string to int"};
+    Result result = {NULL, strdup("Failed to parse string to int")};
     return result;
   }
-  Result result = {(int *)&value, NULL};
+  Result result = {(void *)(intptr_t)value, NULL};
   return result;
+}
+
+void print_special_characters_of_string(char *str) {
+  char *output = malloc(sizeof(char) * strlen(str));
+  for (int i = 0; i < strlen(str); i++) {
+    switch (str[i]) {
+    case '\r':
+      output[i] = 'r';
+      break;
+    case '\n':
+      output[i] = 'n';
+      break;
+    default:
+      output[i] = str[i];
+    }
+  }
+  printf("%s\n", output);
+  free(output);
 }
 
 int main() {
@@ -55,10 +79,17 @@ int main() {
   int max = 0;
   int sum = 0;
   while (fgets(buffer, sizeof buffer, fptr)) {
-    int line_length = strcspn(buffer, "\n");
+    int line_length = strcspn(buffer, LINE_ENDING);
     char line[100];
 
+    printf("LINE_ENDING: '%s', %d\n", LINE_ENDING, strlen(LINE_ENDING));
+    printf("strlen(buffer): %d\n", strlen(buffer));
+    printf("line_length: %d\n", line_length);
+
     strncpy(line, buffer, line_length);
+
+    printf("line[4] = %c\n", line[4]);
+    printf("strlen(line): %d\n", strlen(line));
 
     if (line_length == 0) {
       if (sum > max)
@@ -70,13 +101,16 @@ int main() {
     Result result = string_to_int(line);
     if (result.err != NULL) {
       char error_message[100];
-      sprintf(error_message, "Failed to convert number %s", buffer);
+      sprintf(error_message, "Failed to convert number %s", line);
+      print_special_characters_of_string(line);
       print_error(result.err);
       print_error(error_message);
+
+      free(result.err);
       return 1;
     }
 
-    int number = *(int *)result.some;
+    int number = (int)(intptr_t)result.some;
 
     buffer[0] = '\0';
     line[0] = '\0';
