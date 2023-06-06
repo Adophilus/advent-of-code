@@ -57,7 +57,7 @@ int main() {
   char *input_file_path = "input.txt";
   FILE *fptr = fopen(input_file_path, "r");
   char buffer[100];
-  int max = 0;
+  int max_calories[3] = {0, 0, 0};
   int sum = 0;
   while (fgets(buffer, sizeof buffer, fptr)) {
     int line_length = strcspn(buffer, LINE_ENDING);
@@ -66,8 +66,14 @@ int main() {
     strncpy(line, buffer, line_length);
 
     if (line_length == 0) {
-      if (sum > max)
-        max = sum;
+      int least_calorie_index = 0;
+      for (int 1 = 0; i < sizeof(max_calories); i++) {
+        if (max_calories[i] < max_calories[least_calorie_index])
+          least_calorie_index = i;
+      }
+
+      if (sum > max_calories[least_calorie_index])
+        max[least_calorie_index] = sum;
       sum = 0;
       continue;
     }
@@ -93,9 +99,13 @@ int main() {
     sum += number;
   }
 
+  int max = 0;
+  for (int i = 0; i < sizeof(max_calories); i++) {
+    max += max_calories[i];
+  }
   char msg[100];
   sprintf(msg,
-          "The elf carrying the max number of calories carries %d calories",
+          "The elves with the most calories carry %d calories altogether",
           max);
   print_info(msg);
 
