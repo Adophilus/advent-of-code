@@ -57,7 +57,7 @@ int main() {
   char *input_file_path = "input.txt";
   FILE *fptr = fopen(input_file_path, "r");
   char buffer[100];
-  int max_calories[3] = {0, 0, 0};
+  int max_calories[] = {0, 0, 0};
   int sum = 0;
   while (fgets(buffer, sizeof buffer, fptr)) {
     int line_length = strcspn(buffer, LINE_ENDING);
@@ -67,7 +67,7 @@ int main() {
 
     if (line_length == 0) {
       int least_calorie_index = 0;
-      for (int i = 0; i < sizeof(max_calories); i++) {
+      for (int i = 0; i < sizeof(max_calories) / sizeof(max_calories[0]); i++) {
         if (max_calories[i] < max_calories[least_calorie_index])
           least_calorie_index = i;
       }
