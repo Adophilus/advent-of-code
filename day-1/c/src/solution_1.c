@@ -65,7 +65,6 @@ int main() {
     char line[100];
 
     strncpy(line, buffer, line_length);
-    line[line_length - 1] = '\0';
 
     if (line_length == 0) {
       if (sum > max)
@@ -73,6 +72,8 @@ int main() {
       sum = 0;
       continue;
     }
+
+    line[line_length] = '\0';
 
     Result result = string_to_int(line);
     if (result.err != NULL) {
