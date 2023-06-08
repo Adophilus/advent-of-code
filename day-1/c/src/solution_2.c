@@ -23,14 +23,10 @@
 
 // #include <glib-2.0/glib.h>
 // #include "../lib/glib-2.9.6/glib/glib.h"
+#include "./lib/result.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-struct Result {
-  void *some;
-  char *err;
-} typedef Result;
 
 void print_error(char *err) {
   printf(ANSI_BG_RED "ERROR" ANSI_COLOR_RESET " %s\n", err);
@@ -46,11 +42,9 @@ Result string_to_int(char *str) {
 
   value = strtol(str, &endptr, 10);
   if (str == endptr || *endptr != '\0') {
-    Result result = {NULL, strdup("Failed to parse string to int")};
-    return result;
+    return Err(strdup("Failed to parse string to int"));
   }
-  Result result = {(void *)(intptr_t)value, NULL};
-  return result;
+  return Ok((void *)(intptr_t)value);
 }
 
 int main() {
@@ -104,13 +98,12 @@ int main() {
     max += max_calories[i];
   }
   char msg[100];
-  sprintf(msg, "The elves with the most calories carry %d, %d, and %d calories", max_calories[0], max_calories[1], max_calories[2]);
+  sprintf(msg, "The elves with the most calories carry %d, %d, and %d calories",
+          max_calories[0], max_calories[1], max_calories[2]);
   print_info(msg);
   msg[0] = '\0';
 
-  sprintf(msg,
-          "Altogether they carry %d calories",
-          max);
+  sprintf(msg, "Altogether they carry %d calories", max);
   print_info(msg);
 
   fclose(fptr);
