@@ -2,14 +2,6 @@ const std = @import("std");
 const builtin = @import("builtin");
 
 pub fn main() !void {
-    // var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    // const allocator = gpa.allocator();
-    //
-    // defer {
-    //     const leaks_occurred = gpa.deinit();
-    //     std.debug.print("Any memory leaks? {}\n", .{leaks_occurred});
-    // }
-
     const file = try std.fs.cwd().openFile("input.txt", .{ .mode = .read_only });
     defer file.close();
 
