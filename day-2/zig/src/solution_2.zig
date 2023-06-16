@@ -43,42 +43,42 @@ pub fn main() !void {
             my_score += 0;
 
             if (std.mem.eql(u8, opponent_play, "A")) {
-                my_score += 3;
                 opponent_score += 1;
+                my_score += 3;
             } else if (std.mem.eql(u8, opponent_play, "B")) {
-                my_score += 1;
                 opponent_score += 2;
+                my_score += 1;
             } else if (std.mem.eql(u8, opponent_play, "C")) {
-                my_score += 2;
                 opponent_score += 3;
+                my_score += 2;
             }
-        } else if (std.mem.eql(u8, opponent_play, "Y")) {
+        } else if (std.mem.eql(u8, my_play, "Y")) {
             opponent_score += 3;
             my_score += 3;
 
             if (std.mem.eql(u8, opponent_play, "A")) {
-                my_score += 1;
                 opponent_score += 1;
+                my_score += 1;
             } else if (std.mem.eql(u8, opponent_play, "B")) {
-                my_score += 2;
                 opponent_score += 2;
+                my_score += 2;
             } else if (std.mem.eql(u8, opponent_play, "C")) {
-                my_score += 3;
                 opponent_score += 3;
+                my_score += 3;
             }
-        } else if (std.mem.eql(u8, opponent_play, "Z")) {
+        } else if (std.mem.eql(u8, my_play, "Z")) {
             opponent_score += 0;
             my_score += 6;
 
             if (std.mem.eql(u8, opponent_play, "A")) {
-                my_score += 2;
                 opponent_score += 1;
+                my_score += 2;
             } else if (std.mem.eql(u8, opponent_play, "B")) {
-                my_score += 3;
                 opponent_score += 2;
+                my_score += 3;
             } else if (std.mem.eql(u8, opponent_play, "C")) {
-                my_score += 1;
                 opponent_score += 3;
+                my_score += 1;
             }
         }
 
